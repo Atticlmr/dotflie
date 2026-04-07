@@ -1,18 +1,16 @@
--- 代码补全配置：自动显示补全，但默认不选中，按 Tab 选中
+-- 代码补全配置：自动显示并默认选中第一个，按 Tab 确认
 return {
   {
     "saghen/blink.cmp",
     opts = {
       -- 按键映射配置
       keymap = {
-        -- 使用默认预设作为基础
-        preset = "default",
-        -- Tab 选中并确认，如果没有选中则选择第一个再确认
-        ["<Tab>"] = { "select_next", "accept", "fallback" },
-        -- Shift+Tab 向上选择
-        ["<S-Tab>"] = { "select_prev", "fallback" },
-        -- Enter 仅确认已选中的（不会自动选第一个）
-        ["<CR>"] = { "accept", "fallback" },
+        -- 使用 enter 预设：Tab 接受建议，Enter 插入新行
+        preset = "enter",
+        -- Tab 接受当前选中的（默认第一个是选中的）
+        ["<Tab>"] = { "accept", "fallback" },
+        -- Shift+Tab 接受并向上选择
+        ["<S-Tab>"] = { "select_prev", "accept", "fallback" },
         -- 方向键选择
         ["<Up>"] = { "select_prev", "fallback" },
         ["<Down>"] = { "select_next", "fallback" },
@@ -28,17 +26,15 @@ return {
         trigger = {
           -- 输入关键字时自动显示补全
           show_on_keyword = true,
-          -- 只在输入触发字符时显示
           show_on_trigger_character = true,
-          -- 插入模式下也自动显示
           show_on_insert_on_trigger_character = true,
         },
         -- 列表选择行为
         list = {
           selection = {
-            -- 不自动预选第一个选项（关键配置）
-            preselect = false,
-            -- 不自动插入
+            -- 自动预选第一个选项
+            preselect = true,
+            -- 不自动插入，等待确认
             auto_insert = false,
           },
         },
